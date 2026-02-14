@@ -116,12 +116,20 @@
               עובדים בשיתוף פעולה מלא עם רופאי שיניים ומרפאות, תוך הקפדה על זמני אספקה, תקשורת זמינה ושירות אישי
             </p>
 
-            <form action="" class="hero-form">
-              <input type="email" name="email_address" aria-label="email" placeholder="Your Email Address..." required
-                class="email-field">
+<form name="callback" method="POST" data-netlify="true" class="hero-form">
+  <input type="hidden" name="form-name" value="callback">
 
-              <button type="submit" class="btn">קבל שיחה חוזרת</button>
-            </form>
+  <input 
+    type="email" 
+    name="email" 
+    aria-label="email" 
+    placeholder="Email Address..." 
+    required
+    class="email-field">
+
+  <button type="submit" class="btn">קבל שיחה חוזרת</button>
+</form>
+
 
           </div>
 
