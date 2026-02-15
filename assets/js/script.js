@@ -43,24 +43,22 @@ addEventOnElem(navbarLinks, "click", closeNav);
 
 /**
  * header active
+ * (הוסר backTopBtn לגמרי)
  */
 const header = document.querySelector("[data-header]");
-const backTopBtn = document.querySelector("[data-back-top-btn]");
 
 window.addEventListener("scroll", function () {
-  if (!header || !backTopBtn) return;
+  if (!header) return;
 
   if (window.scrollY >= 100) {
     header.classList.add("active");
-    backTopBtn.classList.add("active");
   } else {
     header.classList.remove("active");
-    backTopBtn.classList.remove("active");
   }
 });
 
 /**
- * Accessibility
+ * Accessibility + WhatsApp
  */
 (function () {
   const accBtn = document.querySelector('.acc-float');
@@ -82,13 +80,14 @@ window.addEventListener("scroll", function () {
     accBtn.setAttribute('aria-expanded', 'false');
   }
 
-  accBtn.addEventListener('click', () => {
+  accBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // שלא יסגר מיד ע"י click בחוץ
     accPanel.classList.contains('open') ? closePanel() : openPanel();
   });
 
   if (accClose) accClose.addEventListener('click', closePanel);
 
-  // סגירה בלחיצה מחוץ לפאנל (אם את לא רוצה - תמחקי את כל הבלוק הזה)
+  // סגירה בלחיצה מחוץ לפאנל
   document.addEventListener('click', (e) => {
     if (!accPanel.classList.contains('open')) return;
     if (accPanel.contains(e.target) || accBtn.contains(e.target)) return;
@@ -102,13 +101,11 @@ window.addEventListener("scroll", function () {
 
   const buttons = accPanel.querySelectorAll('[data-action]');
 
-  // ✅ זום עובד על #site-wrapper (כמו ה-CSS שלך)
   function clearZoom() {
     site.classList.remove('acc-zoom-big', 'acc-zoom-small');
-    site.style.transform = ''; // למקרה שמשהו הוגדר inline
+    site.style.transform = '';
   }
 
-  // ✅ מצבים ויזואליים/טקסט
   function clearModes() {
     site.classList.remove(
       'acc-grayscale',
@@ -130,7 +127,7 @@ window.addEventListener("scroll", function () {
         case 'bigger':
           clearZoom();
           site.classList.add('acc-zoom-big');
-          openPanel(); // נשאר פתוח
+          openPanel();
           break;
 
         case 'smaller':
@@ -176,20 +173,46 @@ window.addEventListener("scroll", function () {
           break;
 
         case 'reset':
-          // ✅ איפוס מלא: גם זום וגם מצבים
           clearZoom();
           clearModes();
 
-          // אם היה לך בעבר זום על html/font-size - נוודא שלא נשאר שום דבר
           document.documentElement.classList.remove('acc-zoom-big', 'acc-zoom-small');
           document.documentElement.style.fontSize = '';
           document.documentElement.style.zoom = '';
           document.documentElement.style.transform = '';
 
-          // משאירים את הפאנל פתוח
           openPanel();
           break;
       }
     });
   });
+
+  /**
+   * WhatsApp bubble (open/close + close on outside click)
+   */
+  const whatsappWrapper = document.querySelector(".whatsapp-wrapper");
+  const whatsappMain = document.querySelector(".whatsapp-main");
+
+  if (whatsappWrapper && whatsappMain) {
+    // פתיחה/סגירה בלחיצה על הבועה
+    whatsappMain.addEventListener("click", (e) => {
+      e.stopPropagation();
+      whatsappWrapper.classList.toggle("active");
+    });
+
+    // סגירה בלחיצה מחוץ לבועה
+    document.addEventListener("click", (e) => {
+      if (!whatsappWrapper.contains(e.target)) {
+        whatsappWrapper.classList.remove("active");
+      }
+    });
+
+    // סגירה עם ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        whatsappWrapper.classList.remove("active");
+      }
+    });
+  }
+
 })();

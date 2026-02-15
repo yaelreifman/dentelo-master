@@ -1202,10 +1202,8 @@ body { direction: rtl; text-align: right; }
     object-fit: contain;
   }
 }
-/* FIX: back-to-top button above hero image */
-.back-top-btn{
-  z-index: 9999;
-}
+
+
 
 /* אם עדיין נבלע בגלל ה-hero/banner */
 .hero,
@@ -2085,4 +2083,71 @@ html, body, #site-wrapper {
   }
   .policy-logo{ max-width: 220px; width: 180px; }
   .policy-title{ font-size: 2.6rem; }
+}
+
+
+/* WhatsApp Floating */
+.whatsapp-wrapper{
+  position: fixed;
+  bottom: 22px;
+  left: 22px;
+  z-index: 1200;
+}
+
+/* Main Bubble */
+.whatsapp-main{
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #25D366;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(0,0,0,.18);
+  transition: .2s ease;
+}
+
+.whatsapp-main:hover{
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Menu opens ABOVE the bubble */
+.whatsapp-menu{
+  position: absolute;
+  bottom: 72px;          /* <-- רווח מעל הכפתור */
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;             /* <-- רווח בין המספרים */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: .2s ease;
+}
+
+.whatsapp-wrapper.active .whatsapp-menu{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.whatsapp-menu a{
+  background: #fff;
+  color: #333;
+  padding: 10px 14px;
+  border-radius: 22px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1;
+  box-shadow: 0 6px 18px rgba(0,0,0,.14);
+  white-space: nowrap;
+}
+
+.whatsapp-menu a:hover{
+  background: #25D366;
+  color: #fff;
 }
