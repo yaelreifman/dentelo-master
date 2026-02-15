@@ -2151,3 +2151,11 @@ html, body, #site-wrapper {
   background: #25D366;
   color: #fff;
 }
+
+/* Prevent floating bubbles from covering footer content */
+@media (min-width: 768px) {
+  .footer-min-inner {
+    padding-left: 110px; /* מרווח מהצד של הוואטסאפ */
+    padding-right: 110px; /* מרווח מהצד של הנגישות */
+  }
+}
