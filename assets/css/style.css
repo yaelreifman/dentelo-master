@@ -212,18 +212,7 @@ body {
   z-index: 4;
 }
 
-.header-bottom.active {
-  position: fixed;
-  top: -81px;
-  background-color: var(--white);
-  box-shadow: var(--shadow-2);
-  animation: slideIn 0.5s var(--cubic-out) forwards;
-}
 
-@keyframes slideIn {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(100%); }
-}
 
 .header-bottom > .container {
   display: flex;
@@ -1167,14 +1156,7 @@ body { direction: rtl; text-align: right; }
   width: auto;
   display: block;
 }
-.header-bottom.active{
-  top: 0 !important;
-  animation: headerSlideDown 0.35s var(--cubic-out) forwards !important;
-}
-@keyframes headerSlideDown{
-  from { transform: translateY(-100%); }
-  to   { transform: translateY(0); }
-}
+
 @media (min-width: 992px){
   .header-bottom.active{ top: 0 !important; }
 }
@@ -2155,7 +2137,35 @@ html, body, #site-wrapper {
 /* Prevent floating bubbles from covering footer content */
 @media (min-width: 768px) {
   .footer-min-inner {
-    padding-left: 110px; /* מרווח מהצד של הוואטסאפ */
-    padding-right: 110px; /* מרווח מהצד של הנגישות */
+    padding-left: 110px;
+    padding-right: 110px; 
   }
 }
+
+/* ===== Sticky Header - FIXED & CLEAN ===== */
+
+/* שיהיה מעל כל ה-badges */
+.header { position: relative; z-index: 5000; }
+.header-bottom { z-index: 5000; }
+
+/* כשהוא הופך ל-sticky */
+.header-bottom.active{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: var(--white);
+  box-shadow: var(--shadow-2);
+
+  /* אנימציה נכונה: נכנס מלמעלה */
+  transform: translateY(-110%);
+  animation: headerDrop 0.35s var(--cubic-out) forwards;
+}
+
+@keyframes headerDrop{
+  to { transform: translateY(0); }
+}
+
+/* כל מה שיכול "לעלות" עליו — להוריד z-index */
+.case-badge{ z-index: 10; } /* במקום 5/999 וכו' */
